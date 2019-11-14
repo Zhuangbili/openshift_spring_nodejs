@@ -18,6 +18,7 @@
 	<properties>
 		<java.version>8</java.version>
 		<spring-boot.bom.version>2.1.6.SP3-redhat-00001</spring-boot.bom.version>
+		<fabric8-maven-plugin.version>4.3.0</fabric8-maven-plugin.version>
 	</properties>
 
 	<dependencyManagement>
@@ -54,7 +55,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>test</scope>
+			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
@@ -71,19 +72,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<profiles>
-						<profile>local</profile>
-					</profiles>
-					<classifier>exec</classifier>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
+			</plugin>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>fabric8-maven-plugin</artifactId>
+				<version>4.3.0</version>
 			</plugin>
 		</plugins>
 	</build>
@@ -102,6 +95,39 @@
 				</dependency>
 			</dependencies>
 		</profile>
+
+		<profile>
+			<id>openshift</id>
+			<dependencies>
+				<dependency>
+					<groupId>mysql</groupId>
+					<artifactId>mysql-connector-java</artifactId>
+					<version>5.1.6</version>
+					<scope>runtime</scope>
+				</dependency>
+			</dependencies>
+			<activation />
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>io.fabric8</groupId>
+						<artifactId>fabric8-maven-plugin</artifactId>
+						<version>${fabric8-maven-plugin.version}</version>
+						<executions>
+							<execution>
+								<id>fmp</id>
+								<phase>package</phase>
+								<goals>
+									<goal>resource</goal>
+									<goal>build</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
 	</profiles>
 
 	<repositories>

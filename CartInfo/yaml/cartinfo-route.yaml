@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Route
+metadata:
+  name: cartinfo
+spec:
+  port:
+    targetPort: 3000
+  to:
+    kind: Service
+    name: cartinfo

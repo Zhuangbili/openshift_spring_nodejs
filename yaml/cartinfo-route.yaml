@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Route
+metadata:
+  name: cartinfo
+  namespace: application-deployment
+spec:
+  port:
+    targetPort: 3000
+  to:
+    kind: Service
+    name: cartinfo

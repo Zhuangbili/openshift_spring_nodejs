@@ -1,0 +1,57 @@
+db.createCollection("cart");
+
+db.cart.insert({
+"product_id": "1234567",
+"custom_id" : "abcdefg",
+"product_name" : "basketball",
+"product_description" : "excellent basketball"
+});
+
+db.cart.insert({
+"product_id": "7654321",
+"custom_id" : "abcdefg",
+"product_name" : "football",
+"product_description" : "excellent football"
+});
+
+db.cart.insert({
+"product_id": "1234567",
+"custom_id" : "bcdefgh",
+"product_name" : "basketball",
+"product_description" : "excellent basketball"
+});
+
+db.cart.insert({
+"product_id": "7654321",
+"custom_id" : "bcdefgh",
+"product_name" : "football",
+"product_description" : "excellent football"
+});
+
+db.cart.insert({
+"product_id": "1234567",
+"custom_id" : "cdefghi",
+"product_name" : "basketball",
+"product_description" : "excellent basketball"
+});
+
+db.cart.insert({
+"product_id": "7654321",
+"custom_id" : "cdefghi",
+"product_name" : "football",
+"product_description" : "excellent football"
+});
+
+db.cart.insert({
+"product_id": "1234567",
+"custom_id" : "defghij",
+"product_name" : "basketball",
+"product_description" : "excellent basketball"
+});
+
+db.cart.insert({
+"product_id": "7654321",
+"custom_id" : "defghij",
+"product_name" : "football",
+"product_description" : "excellent football"
+});

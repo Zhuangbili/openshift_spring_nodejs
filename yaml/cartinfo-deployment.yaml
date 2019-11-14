@@ -1,0 +1,70 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cartinfo
+  namespace: application-deployment
+  labels:
+    app: cartinfo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cartinfo
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: cartinfo
+    spec:
+      containers:
+      - env:
+        - name: MONGO_USER_NAME
+          valueFrom:
+            secretKeyRef:
+              key: database-user
+              name: mongodb
+        - name: MONGO_USER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: database-password
+              name: mongodb
+        - name: MONGO_DATABASE_NAME
+          valueFrom:
+            secretKeyRef:
+              key: database-name
+              name: mongodb
+        - name: USERINFO_SERVICE_NAME
+          valueFrom:
+            configMapKeyRef:
+              key: userinfo-service-name
+              name: cartinfoconfigmap
+        - name: USERINFO_NAMESPACE
+          valueFrom:
+            configMapKeyRef:
+              key: userinfo-namespace
+              name: cartinfoconfigmap
+        - name: MONGO_COLLECTION
+          value: "cart"
+        image: aha04685/cartinfo:latest
+        imagePullPolicy: Always
+        name: cartinfo
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cartinfo
+  namespace: application-deployment
+  labels:
+    app: cartinfo
+spec:
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+  selector:
+    app: cartinfo

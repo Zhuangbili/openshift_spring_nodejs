@@ -1,0 +1,13 @@
+{
+  "logConfigure":{
+      "appenders": {
+          "access": { "type": "stdout" } ,
+          "error": { "type": "stderr" }
+      },
+      "categories": {
+          "default" : { "appenders": ["access"], "level": "info" } ,
+          "access": { "appenders": ["access"], "level": "info" } ,
+           "error": { "appenders": ["error"], "level": "info" }
+          }
+    }
+}

@@ -4,8 +4,11 @@ var bodyParser = require('body-parser');
 var index = require("./routes/index")
 var path = require('path');
 var app = express();
+var logger = require('./util/logger');
 
-
+app.use(bodyParser.json());
+app.use(express.json());
+app.use("/",index);
 
 app.use(function(req, res, next) {
   next(createError(404));
@@ -16,7 +19,7 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-  console.log("express_err***" + err.message);
+  logger.error("error" + err.message);
   // render the error page
   res.status(err.status || 500);
   res.render('error');
